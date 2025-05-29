@@ -8,7 +8,6 @@ import com.PruebaTecnica.PruebaTecnica_PedroMLopez.model.Cama;
 import com.PruebaTecnica.PruebaTecnica_PedroMLopez.model.EstadoCama;
 import com.PruebaTecnica.PruebaTecnica_PedroMLopez.repository.CamaRepository;
 import com.PruebaTecnica.PruebaTecnica_PedroMLopez.service.interfaces.CamaService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -20,11 +19,13 @@ public class CamaServiceImpl implements CamaService {
 
     private final CamaRepository camaRepository;
 
-    @Autowired
     public CamaServiceImpl(CamaRepository camaRepository) {
         this.camaRepository = camaRepository;
     }
 
+    private LocalDateTime horaActual() {
+        return LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
+    }
 
     @Override
     public CamaDetalleDTO obtenerCama(Long idCama) {
@@ -51,12 +52,12 @@ public class CamaServiceImpl implements CamaService {
     @Override
     public void crearCama(Long idCama) {
 
-        if(idCama == null || idCama<= 0){
+        if (idCama == null || idCama <= 0) {
             throw new IllegalArgumentException("El ID de la cama debe ser un número positivo");
         }
 
-        if(camaRepository.existsById(idCama)){
-            throw new CamaDuplicadaException("Ya existe una cama con este ID: " +idCama);
+        if (camaRepository.existsById(idCama)) {
+            throw new CamaDuplicadaException("Ya existe una cama con este ID: " + idCama);
         }
 
         String nuevaEtiqueta = generarNuevaEtiqueta();
@@ -65,7 +66,7 @@ public class CamaServiceImpl implements CamaService {
         cama.setId(idCama);
         cama.setEtiqueta(nuevaEtiqueta);
         cama.setEstado(EstadoCama.LIBRE);
-        cama.setFechaAlta(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
+        cama.setFechaAlta(horaActual());
         camaRepository.save(cama);
     }
 
@@ -74,10 +75,10 @@ public class CamaServiceImpl implements CamaService {
         Cama cama = camaRepository.findById(idCama)
                 .orElseThrow(() -> new CamaNoEncontradaException("Cama no encontrada con id: " + idCama));
 
-        if (cama.getHospital() != null){
+        if (cama.getHospital() != null) {
             throw new EstadoInvalidoException("La cama con ID: " + idCama + " está asignada a un hospital y no puede cambiar su estado");
         }
-        if (!cambioValido(cama.getEstado(), nuevoEstado)){
+        if (!cambioValido(cama.getEstado(), nuevoEstado)) {
             throw new EstadoInvalidoException("Cambio de estado no válido de " + cama.getEstado() + " a " + nuevoEstado);
         }
         cama.setEstado(nuevoEstado);
@@ -90,10 +91,11 @@ public class CamaServiceImpl implements CamaService {
         Cama cama = camaRepository.findById(idCama)
                 .orElseThrow(() -> new CamaNoEncontradaException("No se puede eliminar la cama con ID " + idCama + ", no existe"));
 
+
         cama.setEstado(EstadoCama.BAJA);
-        cama.setFechaBaja(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
-        if(cama.getHospital() != null && cama.getDependencia() != null){
-            cama.setFechaBajaEnHospital(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
+        cama.setFechaBaja(horaActual());
+        if (cama.getHospital() != null && cama.getDependencia() != null) {
+            cama.setFechaBajaEnHospital(horaActual());
             cama.setHospital(null);
             cama.setDependencia(null);
         }
@@ -118,7 +120,7 @@ public class CamaServiceImpl implements CamaService {
     }
 
 
-    private String generarNuevaEtiqueta(){
-        return "CAMA-" + UUID.randomUUID().toString().substring(0,4).toUpperCase();
+    private String generarNuevaEtiqueta() {
+        return "CAMA-" + UUID.randomUUID().toString().substring(0, 4).toUpperCase();
     }
 }

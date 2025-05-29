@@ -35,6 +35,10 @@ public class HospitalServiceImpl implements HospitalService {
         this.camaRepository = camaRepository;
     }
 
+    private LocalDateTime horaActual(){
+        return LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
+    }
+
 
     @Override
     public List<CamaResponseDTO> listarCamasPorHospital(Long idHospital) {
@@ -106,7 +110,7 @@ public class HospitalServiceImpl implements HospitalService {
         cama.setHospital(hospital);
         cama.setDependencia(dependencia);
         cama.setEstado(EstadoCama.OCUPADA);
-        cama.setFechaAltaEnHospital(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
+        cama.setFechaAltaEnHospital(horaActual());
         cama.setFechaBajaEnHospital(null);
 
         camaRepository.save(cama);
@@ -124,7 +128,7 @@ public class HospitalServiceImpl implements HospitalService {
         cama.setHospital(null);
         cama.setDependencia(null);
         cama.setEstado(EstadoCama.LIBRE);
-        cama.setFechaBajaEnHospital(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
+        cama.setFechaBajaEnHospital(horaActual());
         camaRepository.save(cama);
     }
 
