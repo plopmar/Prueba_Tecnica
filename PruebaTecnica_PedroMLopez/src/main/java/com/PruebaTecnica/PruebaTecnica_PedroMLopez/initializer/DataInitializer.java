@@ -7,6 +7,7 @@ import com.PruebaTecnica.PruebaTecnica_PedroMLopez.repository.HospitalRepository
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.lang.invoke.CallSite;
 import java.util.List;
 
 @Component
@@ -42,67 +43,24 @@ public class DataInitializer implements CommandLineRunner {
 
         hospitalRepository.saveAll(List.of(h1, h2, h3));
 
-        Dependencia d1 = new Dependencia();
-        d1.setNombre("Urgencias");
-        d1.setHospital(h1);
+        List<String> dependencias = List.of("Urgencias", "Medico de Familia", "Ginecología", "Psicología", "UCI", "Psiquiatría");
 
-        Dependencia d2 = new Dependencia();
-        d2.setNombre("UCI");
-        d2.setHospital(h1);
-
-        Dependencia d3 = new Dependencia();
-        d3.setNombre("Psquiatría");
-        d3.setHospital(h1);
-
-        Dependencia d4 = new Dependencia();
-        d4.setNombre("Pediatría");
-        d4.setHospital(h1);
-
-        Dependencia d5 = new Dependencia();
-        d5.setNombre("Ginecología");
-        d5.setHospital(h1);
-
-        Dependencia d6 = new Dependencia();
-        d6.setNombre("Urgencias");
-        d6.setHospital(h2);
-
-        Dependencia d7 = new Dependencia();
-        d7.setNombre("UCI");
-        d7.setHospital(h2);
-
-        Dependencia d8 = new Dependencia();
-        d8.setNombre("Psquiatría");
-        d8.setHospital(h2);
-
-        Dependencia d9= new Dependencia();
-        d9.setNombre("Pediatría");
-        d9.setHospital(h2);
-
-        Dependencia d10= new Dependencia();
-        d10.setNombre("Ginecología");
-        d10.setHospital(h2);
-
-        Dependencia d11 = new Dependencia();
-        d11.setNombre("Urgencias");
-        d11.setHospital(h3);
-
-        Dependencia d12 = new Dependencia();
-        d12.setNombre("UCI");
-        d12.setHospital(h3);
-
-        Dependencia d13 = new Dependencia();
-        d13.setNombre("Psquiatría");
-        d13.setHospital(h3);
-
-        Dependencia d14= new Dependencia();
-        d14.setNombre("Pediatría");
-        d14.setHospital(h3);
-
-        Dependencia d15= new Dependencia();
-        d15.setNombre("Ginecología");
-        d15.setHospital(h3);
-
-        dependenciaRepository.saveAll(List.of(d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14, d15));
+        crearDependencias(h1, dependencias);
+        crearDependencias(h2, dependencias);
+        crearDependencias(h3, dependencias);
 
     }
+
+    private void crearDependencias(Hospital hospital, List<String> nombreDependencias){
+
+        List<Dependencia> listaDependencias = nombreDependencias.stream().map(nombre ->{
+            Dependencia dependencia = new Dependencia();
+            dependencia.setNombre(nombre);
+            dependencia.setHospital(hospital);
+            return dependencia;
+        }).toList();
+
+        dependenciaRepository.saveAll(listaDependencias);
+    }
+
 }
