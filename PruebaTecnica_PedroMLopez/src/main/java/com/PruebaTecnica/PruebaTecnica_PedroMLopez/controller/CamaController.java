@@ -5,13 +5,15 @@ import com.PruebaTecnica.PruebaTecnica_PedroMLopez.dto.CamaDetalleDTO;
 import com.PruebaTecnica.PruebaTecnica_PedroMLopez.dto.EstadoCamaDTO;
 import com.PruebaTecnica.PruebaTecnica_PedroMLopez.service.interfaces.CamaService;
 import io.swagger.v3.oas.annotations.Operation;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/camas")
+@Validated
 public class CamaController {
 
     private final CamaService camaService;
@@ -35,7 +37,7 @@ public class CamaController {
 
     @Operation(summary = "Actualizar estado de una cama", description = "Modifica el estado de una cama mientras no esté asignada a un hospital")
     @PutMapping("/{idCama}")
-    public ResponseEntity<Void> actualizarEstado(@PathVariable Long idCama, @RequestBody EstadoCamaDTO estadoCamaDTO){
+    public ResponseEntity<Void> actualizarEstado(@PathVariable Long idCama, @RequestBody @Valid EstadoCamaDTO estadoCamaDTO){
         camaService.actualizarEstadoCama(idCama, estadoCamaDTO.getEstadoCama());
         return ResponseEntity.ok().build();
     }
