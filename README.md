@@ -37,8 +37,8 @@ Este repositorio contiene una API Rest desarrollada con Spring Boot como parte d
 ## Cómo ejecutar el proyecto
 
 ```bash
-git clone 
-cd 
+git clone https://github.com/plopmar/Prueba_Tecnica.git
+cd Prueba_Tecnica
 mvn spring-boot:run
 ```
 
