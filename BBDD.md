@@ -56,6 +56,16 @@
 - Entidades relacionadas mediante anotaciones JPA (`OneToMany` y `ManyToOne`) para asegurar la integridad referencial y las operaciones CRUD.
 - Uso de Clase ENUM (`EstadoCama`) para representar los posibles y únicos estados de una cama.
 - Para tener un control más preciso de los estados de cada cama se ha decidido utilizar fechas de alta y baja tanto para el sistema como para cada hospital. Uso de `LocalDateTime` para almacenar tanto fecha como la hora.
+- **Control de transiciones de estado para camas**: se ha implementado una lógica que restringe los cambios entre estados permitidos para evitar inconsistencias. Las transiciones válidas son:
+
+  - `LIBRE` → `OCUPADA`, `AVERIADA`
+  - `OCUPADA` → `LIBRE`
+  - `AVERIADA` → `EN_REPARACION`
+  - `EN_REPARACION` → `LIBRE`
+  - `BAJA` → no permite ningún cambio
+
+  Esta lógica se implementa mediante un método `cambioValido(EstadoCama actual, EstadoCama nuevo)` que valida si la transición solicitada es aceptable antes de realizarla.
+- Una vez que una cama es asignada a un hospital y cambia su estado a `OCUPADA`, no se permite ninguna otra transición de estado hasta que sea liberada (es decir, su relación con el hospital finalice).
 
 ---
 
