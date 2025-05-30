@@ -24,7 +24,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/camas/2",
+					"raw": "http://localhost:8080/camas/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -32,7 +32,7 @@
 					"port": "8080",
 					"path": [
 						"camas",
-						"2"
+						"1"
 					]
 				}
 			},
@@ -185,7 +185,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/hospitales/1/5/camas",
+					"raw": "http://localhost:8080/hospitales/1/1/camas",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -194,7 +194,7 @@
 					"path": [
 						"hospitales",
 						"1",
-						"5",
+						"1",
 						"camas"
 					]
 				}
@@ -219,7 +219,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/hospitales/1/camas/2",
+					"raw": "http://localhost:8080/hospitales/1/camas/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -229,7 +229,7 @@
 						"hospitales",
 						"1",
 						"camas",
-						"2"
+						"1"
 					]
 				}
 			},
