@@ -15,13 +15,13 @@ Este repositorio contiene una API Rest desarrollada con Spring Boot como parte d
 
 ### Gestión de hospitales
 
-| Método | Ruta                                             | Descripción                                                                 |
-|--------|--------------------------------------------------|-----------------------------------------------------------------------------|
-| GET    | /{idHospital}/camas                              | Lista todas las camas registradas en un hospital.                          |
-| GET    | /{idHospital}/dependencias                       | Lista todas las dependencias del hospital especificado.                    |
-| GET    | /{idHospital}/{idDependencia}/camas              | Lista todas las camas dentro de una dependencia concreta del hospital.     |
-| PUT    | /{idHospital}/camas/{idCama}                     | Registra una cama en un hospital y una dependencia.                        |
-| DELETE | /{idHospital}/camas/{idCama}                     | Elimina una cama del hospital.                                             |
+| Método | Ruta                                                        | Descripción                                                                 |
+|--------|-------------------------------------------------------------|-----------------------------------------------------------------------------|
+| GET    | /hospitales/{idHospital}/camas                              | Lista todas las camas registradas en un hospital.                          |
+| GET    | /hospitales/{idHospital}/dependencias                       | Lista todas las dependencias del hospital especificado.                    |
+| GET    | /hospitales/{idHospital}/{idDependencia}/camas              | Lista todas las camas dentro de una dependencia concreta del hospital.     |
+| PUT    | /hospitales/{idHospital}/camas/{idCama}                     | Registra una cama en un hospital y una dependencia.                        |
+| DELETE | /hospitales/{idHospital}/camas/{idCama}                     | Elimina una cama del hospital.                                             |
 
 
 ### Gestión de camas
@@ -39,6 +39,7 @@ Este repositorio contiene una API Rest desarrollada con Spring Boot como parte d
 ```bash
 git clone https://github.com/plopmar/Prueba_Tecnica.git
 cd Prueba_Tecnica
+cd PruebaTecnica_PedroMLopez
 mvn spring-boot:run
 ```
 
